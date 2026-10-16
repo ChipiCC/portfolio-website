@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
-import BlogArticle from '../layouts/BlogArticle.astro';
+import ArticleLayout from '../layouts/ArticleLayout.astro';
 
 const [about] = await getCollection('about');
 
@@ -11,11 +11,11 @@ if (!about) {
 const { Content, headings } = await render(about);
 ---
 
-<BlogArticle
+<ArticleLayout
   post={about}
   headings={headings}
   sidebar={{ enable: false, ...about.data.sidebar }}
   contentFont="ui"
 >
   <Content />
-</BlogArticle>
+</ArticleLayout>

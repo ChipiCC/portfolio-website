@@ -8,8 +8,8 @@ interface Props {
 }
 
 const { date } = Astro.props;
-const { pages } = await getSiteConfig();
-const formattedDate = format(date, pages.blog.dateFormat);
+const { format: siteFormat } = await getSiteConfig();
+const formattedDate = format(date, siteFormat.dateFormat);
 ---
 
 <time datetime={date.toISOString()}>{formattedDate}</time>

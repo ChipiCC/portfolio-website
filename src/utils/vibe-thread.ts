@@ -1,6 +1,6 @@
 type VibeThreadWindow = Window & {
-  __navfolioVibeThreadCleanup?: () => void;
-  __navfolioVibeThreadEvents?: boolean;
+  __portfolioVibeThreadCleanup?: () => void;
+  __portfolioVibeThreadEvents?: boolean;
 };
 
 type VibeDotPosition = {
@@ -13,8 +13,8 @@ const getVibeThreadWindow = (): VibeThreadWindow => window as VibeThreadWindow;
 const clearVibeThread = (): void => {
   const vibeWindow = getVibeThreadWindow();
 
-  vibeWindow.__navfolioVibeThreadCleanup?.();
-  vibeWindow.__navfolioVibeThreadCleanup = undefined;
+  vibeWindow.__portfolioVibeThreadCleanup?.();
+  vibeWindow.__portfolioVibeThreadCleanup = undefined;
 };
 
 const getDotPositions = (stream: HTMLElement): VibeDotPosition[] => {
@@ -91,7 +91,7 @@ const mountCurrentVibeThread = (): void => {
   window.addEventListener('resize', scheduleDraw);
   resizeObserver?.observe(stream);
 
-  getVibeThreadWindow().__navfolioVibeThreadCleanup = () => {
+  getVibeThreadWindow().__portfolioVibeThreadCleanup = () => {
     window.removeEventListener('resize', scheduleDraw);
     resizeObserver?.disconnect();
   };
@@ -100,8 +100,8 @@ const mountCurrentVibeThread = (): void => {
 export const mountVibeThread = (): void => {
   const vibeWindow = getVibeThreadWindow();
 
-  if (!vibeWindow.__navfolioVibeThreadEvents) {
-    vibeWindow.__navfolioVibeThreadEvents = true;
+  if (!vibeWindow.__portfolioVibeThreadEvents) {
+    vibeWindow.__portfolioVibeThreadEvents = true;
     document.addEventListener('astro:page-load', mountCurrentVibeThread);
     document.addEventListener('astro:before-swap', clearVibeThread);
     window.addEventListener('pagehide', clearVibeThread);

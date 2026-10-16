@@ -2,9 +2,9 @@ type TocLink = HTMLAnchorElement;
 type TocRoot = HTMLElement;
 
 type TocWindow = Window & {
-  __navfolioTocSpyCleanup?: () => void;
-  __navfolioTocSpyEvents?: boolean;
-  __navfolioTocSpyPageKey?: string;
+  __portfolioTocSpyCleanup?: () => void;
+  __portfolioTocSpyEvents?: boolean;
+  __portfolioTocSpyPageKey?: string;
 };
 
 import { buildHashIdCandidates, normalizeHash } from './toc-hash';
@@ -369,14 +369,14 @@ const initNavfolioToc = (): (() => void) | null => {
 export const mountNavfolioTocSpy = (): void => {
   const tocWindow = window as TocWindow;
   const cleanupCurrent = () => {
-    tocWindow.__navfolioTocSpyCleanup?.();
-    tocWindow.__navfolioTocSpyCleanup = undefined;
-    tocWindow.__navfolioTocSpyPageKey = undefined;
+    tocWindow.__portfolioTocSpyCleanup?.();
+    tocWindow.__portfolioTocSpyCleanup = undefined;
+    tocWindow.__portfolioTocSpyPageKey = undefined;
   };
 
   const mountCurrentPage = () => {
     const pageKey = `${window.location.pathname}${window.location.search}`;
-    if (tocWindow.__navfolioTocSpyPageKey === pageKey) {
+    if (tocWindow.__portfolioTocSpyPageKey === pageKey) {
       return;
     }
 
@@ -384,13 +384,13 @@ export const mountNavfolioTocSpy = (): void => {
 
     const cleanup = initNavfolioToc();
     if (cleanup) {
-      tocWindow.__navfolioTocSpyCleanup = cleanup;
-      tocWindow.__navfolioTocSpyPageKey = pageKey;
+      tocWindow.__portfolioTocSpyCleanup = cleanup;
+      tocWindow.__portfolioTocSpyPageKey = pageKey;
     }
   };
 
-  if (!tocWindow.__navfolioTocSpyEvents) {
-    tocWindow.__navfolioTocSpyEvents = true;
+  if (!tocWindow.__portfolioTocSpyEvents) {
+    tocWindow.__portfolioTocSpyEvents = true;
     document.addEventListener('astro:page-load', mountCurrentPage);
     document.addEventListener('astro:before-swap', cleanupCurrent);
     window.addEventListener('pagehide', cleanupCurrent);

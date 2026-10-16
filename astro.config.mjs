@@ -4,9 +4,6 @@ import fs from 'node:fs';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
-import rehypeKatex from 'rehype-katex';
-import rehypeMathjax from 'rehype-mathjax';
-import remarkMath from 'remark-math';
 import { parse } from 'smol-toml';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -14,7 +11,6 @@ import tailwindcss from '@tailwindcss/vite';
 import expressiveCode from 'astro-expressive-code';
 
 import rehypeResponsiveTables from './src/utils/rehype-responsive-tables';
-import remarkMermaid from './src/utils/remark-mermaid';
 
 /**
  * @param {unknown} value
@@ -25,10 +21,7 @@ const isRecord = (value) => typeof value === 'object' && value !== null && !Arra
 const siteToml = parse(fs.readFileSync(new URL('./src/config/site.toml', import.meta.url), 'utf8'));
 const configToml = isRecord(siteToml.config) ? siteToml.config : {};
 const siteConfig = isRecord(configToml.site) ? configToml.site : {};
-const mathConfig = isRecord(configToml.math) ? configToml.math : {};
 const configuredSiteUrl = siteConfig.url;
-const configuredMathRenderer = mathConfig.render;
-const mathRenderer = configuredMathRenderer === 'mathjax' ? 'mathjax' : 'katex';
 /**
  * @param {unknown} value
  */
@@ -70,11 +63,7 @@ export default defineConfig({
   site: resolvedSite,
   base: resolvedBase,
   markdown: {
-    remarkPlugins: [remarkMath, remarkMermaid],
-    rehypePlugins: [
-      mathRenderer === 'mathjax' ? rehypeMathjax : rehypeKatex,
-      rehypeResponsiveTables,
-    ],
+    rehypePlugins: [rehypeResponsiveTables],
   },
   integrations: [expressiveCode(), mdx(), sitemap()],
 

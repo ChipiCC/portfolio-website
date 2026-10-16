@@ -8,20 +8,14 @@ repository = "https://github.com/ChipiCC/portfolio-website"
 footerNote = "Built with Astro."
 
 [config.theme]
-# Available palettes:
-# green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
+# Single-palette build: only blue-soft is shipped.
 palette = "blue-soft"
-# UI language. Valid values: en, zh-CN, zh-TW. Unknown values fall back to en.
 lang = "en"
 
 [config.fonts]
 # Latin and code-oriented UI fonts
 en = "Maple Mono"
 code = "Monaco"
-# Reading font for CJK content
-zh = "ChillRoundM"
-# Full CJK font file
-file = "/fonts/ChillRoundM.ttf"
 
 [config.code]
 lightTheme = "catppuccin-latte"
@@ -31,8 +25,11 @@ wrap = true
 preserveIndent = true
 collapseStyle = "collapsible-auto"
 
-[config.math]
-render = "katex" # "katex" | "mathjax"
+[config.format]
+# date-fns date format template.
+dateFormat = "yyyy-MM-dd"
+# Metadata separator. Use symbols like "|" or "/", or the special value "icon".
+metadataSeparator = "icon"
 
 [config.comments]
 enabled = false
@@ -44,31 +41,6 @@ enabled = true
 shortcut = "mod+k"
 placeholder = "Search..."
 maxResults = 6
-
-[config.pages.blog]
-title = "Notes"
-kicker = "Notebook archive"
-subtitle = "Notes from the margins."
-note = "Occasional field notes and technical margins, arranged for slow browsing."
-postsPerPage = 6
-# date-fns date format template.
-dateFormat = "yyyy-MM-dd"
-# Metadata separator. Use symbols like "|" or "/", or the special value "icon".
-metadataSeparator = "icon"
-# Post list cover style: "card" keeps a bordered thumbnail, "mask" blends the image to the right.
-coverImageStyle = "mask"
-
-[config.pages.blog.categories]
-title = "Categories"
-kicker = "Browse notes"
-subtitle = ""
-note = "A quiet index of recurring topics, gathered from article frontmatter."
-
-[config.pages.blog.series]
-title = "Series"
-kicker = "Reading paths"
-subtitle = ""
-note = "Connected notes that can be followed in the order they were written."
 
 [config.pages.projects]
 title = "Projects"
@@ -158,14 +130,6 @@ body = [
   "Currently open to new opportunities — feel free to reach out.",
 ]
 
-[config.home.latest]
-count = 1
-heatmapWeeks = 24
-showHeatmapLatest = true
-excludeDraft = true
-startDate = ""
-dateArchiveBaseHref = ""
-
 [[config.home.navigation]]
 icon = "briefcase"
 title = "Resume"
@@ -207,12 +171,6 @@ label = "Email"
 icon = "mail"
 tooltip = "hello@example.com"
 copy = true
-
-[[config.home.links]]
-label = "RSS"
-icon = "rss"
-tooltip = "/rss.xml"
-copy = false
 
 [[config.home.doing]]
 text = "Building a personal portfolio and design system"
