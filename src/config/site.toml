@@ -1,9 +1,9 @@
 [config.site]
 title = "Portfolio"
 description = "Personal portfolio: projects, experience, and notes."
-pageTitle = "Your Name · Software Developer"
-pageDescription = "Portfolio of Your Name — software developer. Selected projects, professional experience, and writing."
-url = "https://example.com"
+pageTitle = "Guillermo Rodríguez · Software Engineer"
+pageDescription = "Portfolio of Guillermo Rodríguez — full-stack software engineer in Málaga. Selected projects, professional experience, and writing."
+url = "https://chipicc.github.io/portfolio-website"
 repository = "https://github.com/ChipiCC/portfolio-website"
 footerNote = "Built with Astro."
 
@@ -84,12 +84,13 @@ pageview = true
 comment = true
 
 [config.profile]
-name = "Your Name"
-handle = "@yourhandle"
-role = "Software Developer"
-email = "hello@example.com"
-website = "https://example.com"
+name = "Guillermo Rodríguez"
+handle = "@ChipiCC"
+role = "Software Engineer"
+email = "grmbio7@gmail.com"
+website = "https://chipicc.github.io/portfolio-website"
 github = "https://github.com/ChipiCC"
+linkedin = "https://www.linkedin.com/in/guillermo-rodr%C3%ADguez-moreno-b91568272"
 avatar = "/images/avatar.svg"
 
 [[config.topNav.links]]
@@ -116,17 +117,17 @@ href = "/about"
 
 [config.home.quote]
 text = [
-  "Build things that",
-  "people actually use,",
-  "and keep learning in public.",
+  "Build systems that stay simple",
+  "as they scale, and stay readable",
+  "long after they ship.",
 ]
 
 [config.home.intro]
 title = "hello, I build software"
-name = "Your Name"
+name = "Guillermo Rodríguez"
 body = [
-  "I'm a software developer focused on building reliable, user-friendly products.",
-  "This site collects my selected projects, professional experience, and a few notes along the way.",
+  "I'm a full-stack software engineer based in Málaga, Spain, focused on fintech and modern software architecture.",
+  "I build with Python (FastAPI) and React, deploy on AWS with Terraform and GitHub Actions, and bring AI-assisted workflows into the way I work.",
   "Currently open to new opportunities — feel free to reach out.",
 ]
 
@@ -152,7 +153,7 @@ href = "https://github.com/ChipiCC"
 icon = "linkedin"
 title = "LinkedIn"
 subtitle = "Professional profile and contact"
-href = "https://www.linkedin.com/in/yourhandle"
+href = "https://www.linkedin.com/in/guillermo-rodr%C3%ADguez-moreno-b91568272"
 
 [[config.home.links]]
 label = "GitHub"
@@ -163,27 +164,27 @@ copy = false
 [[config.home.links]]
 label = "LinkedIn"
 icon = "linkedin"
-tooltip = "https://www.linkedin.com/in/yourhandle"
+tooltip = "https://www.linkedin.com/in/guillermo-rodr%C3%ADguez-moreno-b91568272"
 copy = false
 
 [[config.home.links]]
 label = "Email"
 icon = "mail"
-tooltip = "hello@example.com"
+tooltip = "grmbio7@gmail.com"
 copy = true
 
 [[config.home.doing]]
-text = "Building a personal portfolio and design system"
+text = "Building fintech products at Ebury"
 mark = "01"
 
 [[config.home.doing]]
-text = "Deepening my TypeScript and systems fundamentals"
+text = "Bringing AI and LLM-assisted workflows into engineering practice"
 mark = "02"
 
 [[config.home.doing]]
-text = "Contributing to open-source projects"
+text = "Deepening AWS and Terraform infrastructure skills"
 mark = "03"
 
 [[config.home.doing]]
-text = "Reading about developer experience and tooling"
+text = "Writing about clean architecture and mentoring"
 mark = "04"

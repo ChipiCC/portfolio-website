@@ -1,11 +1,11 @@
 {
-  "name": "Portfolio",
-  "short_name": "Portfolio",
-  "description": "Personal portfolio: projects, experience, and notes.",
+  "name": "Guillermo Rodríguez — Portfolio",
+  "short_name": "Guillermo R.",
+  "description": "Portfolio of Guillermo Rodríguez — full-stack software engineer in Málaga. Projects, experience, and notes.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "theme_color": "#637da3",
   "icons": [
     {
       "src": "web-app-manifest-192x192.png",

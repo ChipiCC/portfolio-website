@@ -49,89 +49,96 @@ export interface Resume {
 
 export const resume: Resume = {
   summary:
-    'Software developer with experience across the stack, from database to interface. ' +
-    'I focus on shipping reliable products, keeping systems simple, and making the details ' +
-    'users touch feel considered. Replace this paragraph with a two- or three-sentence pitch ' +
-    'that says who you are, what you are good at, and what you want next.',
-  location: 'City, Country',
-  availability: 'Open to new opportunities',
+    'Full-stack software engineer with 2+ years building scalable products, focused on fintech ' +
+    'and modern software architecture. I work mainly in Python (FastAPI) and React, deploy on ' +
+    'AWS with Terraform and GitHub Actions, and bring AI/LLM-assisted workflows into day-to-day ' +
+    'engineering. I care about clean, well-documented code and mentoring the people around me.',
+  location: 'Málaga, Spain',
+  availability: 'Open to work',
   experience: [
     {
-      role: 'Senior Software Developer',
-      company: 'Example Corp',
-      location: 'Remote',
-      start: '2023-01',
+      role: 'Engineer I',
+      company: 'Ebury',
+      companyUrl: 'https://www.ebury.com/',
+      location: 'Málaga, Spain',
+      start: '2025-06',
       end: undefined,
-      summary: 'Lead developer on a customer-facing product used by thousands of people daily.',
+      summary:
+        'Own features end to end on a fintech platform, from architecture through deployment.',
       highlights: [
-        'Led the rebuild of the core experience, cutting page load time by 60%.',
-        'Designed the API and data model that three teams now build on.',
-        'Mentored two junior developers through their first production launches.',
+        'Delivered the company-wide web rebranding, migrating legacy frontends to a React architecture that improved page load speeds by 35% and lifted SEO metrics.',
+        'Owned full feature lifecycles: architectural decisions, high-throughput FastAPI APIs, and deployments on AWS via Terraform and GitHub Actions.',
+        'Pioneered agentic coding practices and AI-driven workflows across the team, accelerating feature delivery by 20% while keeping code reliability high.',
+        'Mentored junior engineers and ran technical onboarding, setting code review standards and sharing practices in clean code and software architecture.',
+        'Worked across engineering teams to standardize API designs and reusable components, breaking down silos and improving cross-team velocity.',
       ],
-      tech: ['TypeScript', 'Astro', 'Node.js', 'PostgreSQL'],
+      tech: ['Python', 'FastAPI', 'React', 'AWS', 'Terraform', 'GitHub Actions'],
     },
     {
-      role: 'Software Developer',
-      company: 'Another Company',
-      location: 'City, Country',
-      start: '2021-03',
-      end: '2022-12',
-      summary: 'Built and maintained features across a multi-tenant SaaS platform.',
+      role: 'Associate Engineer',
+      company: 'Ebury',
+      companyUrl: 'https://www.ebury.com/',
+      location: 'Málaga, Spain',
+      start: '2024-06',
+      end: '2025-06',
+      summary: 'Co-built a greenfield product from scratch, from system design to production.',
       highlights: [
-        'Shipped an integration that reduced manual support tickets by 35%.',
-        'Introduced end-to-end tests, raising coverage from 20% to 75%.',
+        'Co-engineered a greenfield project end to end, contributing to the planning, design, and implementation of the system architecture.',
+        'Developed scalable microservices and high-performance REST APIs with FastAPI, handling backend logic and data processing.',
+        'Built dynamic frontend features with Next.js, optimizing client-side performance and user experience.',
+        'Kept the codebase robust with comprehensive unit tests and automated testing workflows.',
       ],
-      tech: ['React', 'GraphQL', 'Docker', 'AWS'],
+      tech: ['Python', 'FastAPI', 'Next.js', 'PostgreSQL'],
     },
     {
-      role: 'Junior Developer',
-      company: 'First Job',
-      start: '2019-06',
-      end: '2021-02',
+      role: 'Junior Developer (Internship)',
+      company: 'Bartolomé Consultores',
+      location: 'Fuengirola, Spain',
+      start: '2024-03',
+      end: '2024-05',
       highlights: [
-        'Delivered internal tools that replaced manual spreadsheet workflows.',
-        'Learned to write code for the next reader, not just the next deadline.',
+        'Migrated a core internal application from PHP to a modern Angular architecture, improving frontend performance and maintainability.',
+        'Designed and developed RESTful APIs for efficient data communication between systems.',
+        'Redesigned complex user interfaces, improving UX and adding new platform functionality.',
       ],
-      tech: ['JavaScript', 'Python', 'SQL'],
+      tech: ['Angular', 'PHP', 'REST APIs'],
     },
   ],
   education: [
     {
-      degree: 'B.Sc. in Computer Science',
-      school: 'Example University',
-      location: 'City, Country',
-      start: '2015',
-      end: '2019',
-      details: ['Focus on distributed systems and human-computer interaction.'],
+      degree: 'Associate Degree in Development of Web Applications',
+      school: 'IES Vega de Mijas',
+      location: 'Mijas, Spain',
+      start: '2022',
+      end: '2024',
+      details: ['Level 5 on the European Qualifications Framework (EQF).'],
     },
   ],
   skills: [
     {
-      label: 'Languages',
-      items: ['TypeScript', 'JavaScript', 'Python', 'SQL', 'Go'],
-    },
-    {
-      label: 'Frontend',
-      items: ['Astro', 'React', 'Tailwind CSS', 'HTML & CSS', 'Accessibility'],
+      label: 'Programming Languages',
+      items: ['Python', 'JavaScript', 'TypeScript', 'Java', 'SQL', 'PHP'],
     },
     {
       label: 'Backend',
-      items: ['Node.js', 'PostgreSQL', 'Redis', 'REST', 'GraphQL'],
+      items: ['FastAPI', 'Spring Boot', 'RESTful APIs', 'Microservices'],
     },
     {
-      label: 'Tooling',
-      items: ['Git', 'Docker', 'CI/CD', 'Linux', 'Vitest'],
+      label: 'Frontend',
+      items: ['React', 'Next.js', 'Astro', 'Angular'],
     },
-  ],
-  certifications: [
     {
-      name: 'Example Certification',
-      issuer: 'Example Issuer',
-      year: '2024',
+      label: 'Cloud & DevOps',
+      items: ['AWS', 'Terraform', 'Docker', 'GitHub Actions'],
+    },
+    {
+      label: 'AI & Methodologies',
+      items: ['AI-Assisted Development', 'LLM Integration', 'Agile (Scrum/Kanban)', 'SOLID'],
     },
   ],
+  certifications: [],
   languages: [
-    { name: 'English', level: 'Fluent' },
     { name: 'Spanish', level: 'Native' },
+    { name: 'English', level: 'B2 – Professional Working Proficiency' },
   ],
 };
