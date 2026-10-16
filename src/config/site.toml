@@ -1,0 +1,231 @@
+[config.site]
+title = "Portfolio"
+description = "Personal portfolio: projects, experience, and notes."
+pageTitle = "Your Name · Software Developer"
+pageDescription = "Portfolio of Your Name — software developer. Selected projects, professional experience, and writing."
+url = "https://example.com"
+repository = "https://github.com/ChipiCC/portfolio-website"
+footerNote = "Built with Astro."
+
+[config.theme]
+# Available palettes:
+# green-soft, green-vivid, rose-soft, pink-soft, purple-soft, blue-soft, orange-soft, brown-soft
+palette = "blue-soft"
+# UI language. Valid values: en, zh-CN, zh-TW. Unknown values fall back to en.
+lang = "en"
+
+[config.fonts]
+# Latin and code-oriented UI fonts
+en = "Maple Mono"
+code = "Monaco"
+# Reading font for CJK content
+zh = "ChillRoundM"
+# Full CJK font file
+file = "/fonts/ChillRoundM.ttf"
+
+[config.code]
+lightTheme = "catppuccin-latte"
+darkTheme = "catppuccin-macchiato"
+lineNumbers = true
+wrap = true
+preserveIndent = true
+collapseStyle = "collapsible-auto"
+
+[config.math]
+render = "katex" # "katex" | "mathjax"
+
+[config.comments]
+enabled = false
+provider = "none"
+show_on_posts = true
+
+[config.search]
+enabled = true
+shortcut = "mod+k"
+placeholder = "Search..."
+maxResults = 6
+
+[config.pages.blog]
+title = "Notes"
+kicker = "Notebook archive"
+subtitle = "Notes from the margins."
+note = "Occasional field notes and technical margins, arranged for slow browsing."
+postsPerPage = 6
+# date-fns date format template.
+dateFormat = "yyyy-MM-dd"
+# Metadata separator. Use symbols like "|" or "/", or the special value "icon".
+metadataSeparator = "icon"
+# Post list cover style: "card" keeps a bordered thumbnail, "mask" blends the image to the right.
+coverImageStyle = "mask"
+
+[config.pages.blog.categories]
+title = "Categories"
+kicker = "Browse notes"
+subtitle = ""
+note = "A quiet index of recurring topics, gathered from article frontmatter."
+
+[config.pages.blog.series]
+title = "Series"
+kicker = "Reading paths"
+subtitle = ""
+note = "Connected notes that can be followed in the order they were written."
+
+[config.pages.projects]
+title = "Projects"
+kicker = "Selected work"
+subtitle = "Things I have designed, built, and shipped."
+note = "A compact shelf of projects with the context, the decisions, and the outcome."
+
+[config.pages.vibe]
+title = "Vibe"
+kicker = ""
+subtitle = "Life and coding fragments."
+note = "Not formal enough for a project writeup, but still part of the story."
+showTrail = true
+
+[config.comments.giscus]
+repo = ""
+repo_id = ""
+category = ""
+category_id = ""
+mapping = "pathname"
+strict = "0"
+reactions_enabled = "1"
+emit_metadata = "0"
+input_position = "top"
+light_theme = "light"
+dark_theme = "dark"
+lang = "en"
+loading = "lazy"
+
+[config.comments.utterances]
+repo = ""
+issue_term = "pathname"
+label = "comment"
+theme = "github-light"
+
+[config.comments.waline]
+server_url = ""
+lang = "en"
+dark = "html.dark"
+pageview = true
+comment = true
+
+[config.profile]
+name = "Your Name"
+handle = "@yourhandle"
+role = "Software Developer"
+email = "hello@example.com"
+website = "https://example.com"
+github = "https://github.com/ChipiCC"
+avatar = "/images/avatar.svg"
+
+[[config.topNav.links]]
+label = "Home"
+href = "/"
+
+[[config.topNav.links]]
+label = "Projects"
+href = "/projects"
+
+[[config.topNav.links]]
+label = "Resume"
+href = "/resume"
+
+[[config.topNav.links]]
+label = "Vibe"
+href = "/vibe"
+
+[[config.topNav.links]]
+label = "About"
+href = "/about"
+
+[config.home]
+
+[config.home.quote]
+text = [
+  "Build things that",
+  "people actually use,",
+  "and keep learning in public.",
+]
+
+[config.home.intro]
+title = "hello, I build software"
+name = "Your Name"
+body = [
+  "I'm a software developer focused on building reliable, user-friendly products.",
+  "This site collects my selected projects, professional experience, and a few notes along the way.",
+  "Currently open to new opportunities — feel free to reach out.",
+]
+
+[config.home.latest]
+count = 1
+heatmapWeeks = 24
+showHeatmapLatest = true
+excludeDraft = true
+startDate = ""
+dateArchiveBaseHref = ""
+
+[[config.home.navigation]]
+icon = "briefcase"
+title = "Resume"
+subtitle = "Experience, skills, and education"
+href = "/resume"
+
+[[config.home.navigation]]
+icon = "folder"
+title = "Projects"
+subtitle = "Selected work and case studies"
+href = "/projects"
+
+[[config.home.navigation]]
+icon = "github"
+title = "GitHub"
+subtitle = "Code, experiments, and tools"
+href = "https://github.com/ChipiCC"
+
+[[config.home.navigation]]
+icon = "linkedin"
+title = "LinkedIn"
+subtitle = "Professional profile and contact"
+href = "https://www.linkedin.com/in/yourhandle"
+
+[[config.home.links]]
+label = "GitHub"
+icon = "github"
+tooltip = "https://github.com/ChipiCC"
+copy = false
+
+[[config.home.links]]
+label = "LinkedIn"
+icon = "linkedin"
+tooltip = "https://www.linkedin.com/in/yourhandle"
+copy = false
+
+[[config.home.links]]
+label = "Email"
+icon = "mail"
+tooltip = "hello@example.com"
+copy = true
+
+[[config.home.links]]
+label = "RSS"
+icon = "rss"
+tooltip = "/rss.xml"
+copy = false
+
+[[config.home.doing]]
+text = "Building a personal portfolio and design system"
+mark = "01"
+
+[[config.home.doing]]
+text = "Deepening my TypeScript and systems fundamentals"
+mark = "02"
+
+[[config.home.doing]]
+text = "Contributing to open-source projects"
+mark = "03"
+
+[[config.home.doing]]
+text = "Reading about developer experience and tooling"
+mark = "04"

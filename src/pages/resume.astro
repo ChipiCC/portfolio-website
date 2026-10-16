@@ -1,0 +1,550 @@
+---
+import Footer from '../components/Footer.astro';
+import { resume } from '../data/resume';
+import { getSiteConfig } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const { profile, site } = await getSiteConfig();
+
+function formatMonth(value?: string) {
+  if (!value) return 'Present';
+
+  const [year, month] = value.split('-');
+  if (!month) return value;
+
+  return new Date(Number(year), Number(month) - 1, 1).toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+const contactLinks = [
+  { label: 'Email', href: `mailto:${profile.email}` },
+  { label: 'GitHub', href: profile.github },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yourhandle' },
+  { label: 'Website', href: profile.website },
+].filter((link) => link.href);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: profile.name,
+  jobTitle: profile.role,
+  email: `mailto:${profile.email}`,
+  url: site.url,
+  sameAs: [profile.github, profile.website].filter(Boolean),
+  address: { '@type': 'PostalAddress', addressLocality: resume.location },
+};
+---
+
+<BaseLayout
+  title={`Résumé | ${profile.name}`}
+  description={`Résumé of ${profile.name} — ${profile.role}. Experience, skills, and education.`}
+>
+  <main class="resume">
+    <div class="resume-shell">
+      <header class="resume-header">
+        <p class="resume-kicker">Résumé</p>
+        <h1>{profile.name}</h1>
+        <p class="resume-role">{profile.role}</p>
+        <p class="resume-meta">
+          <span>{resume.location}</span>
+          <span class="resume-availability">
+            <span class="resume-dot" aria-hidden="true"></span>
+            {resume.availability}
+          </span>
+        </p>
+
+        <div class="resume-actions">
+          <button class="resume-action resume-action-primary" type="button" data-resume-print>
+            Download PDF
+          </button>
+          {
+            contactLinks.map((link) => (
+              <a
+                class="resume-action"
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              >
+                {link.label}
+              </a>
+            ))
+          }
+        </div>
+      </header>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Summary</h2>
+        <p class="resume-summary">{resume.summary}</p>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Experience</h2>
+        <ol class="resume-timeline">
+          {
+            resume.experience.map((job) => (
+              <li class="resume-entry">
+                <div class="resume-entry-head">
+                  <div>
+                    <h3 class="resume-entry-title">{job.role}</h3>
+                    <p class="resume-entry-org">
+                      {job.companyUrl ? (
+                        <a href={job.companyUrl} target="_blank" rel="noopener noreferrer">
+                          {job.company}
+                        </a>
+                      ) : (
+                        job.company
+                      )}
+                      {job.location && <span class="resume-entry-loc"> · {job.location}</span>}
+                    </p>
+                  </div>
+                  <p class="resume-entry-dates">
+                    {formatMonth(job.start)} — {formatMonth(job.end)}
+                  </p>
+                </div>
+
+                {job.summary && <p class="resume-entry-summary">{job.summary}</p>}
+
+                {job.highlights.length > 0 && (
+                  <ul class="resume-highlights">
+                    {job.highlights.map((highlight) => (
+                      <li>{highlight}</li>
+                    ))}
+                  </ul>
+                )}
+
+                {job.tech && job.tech.length > 0 && (
+                  <ul class="resume-tech" aria-label="Technologies">
+                    {job.tech.map((tech) => (
+                      <li>{tech}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Education</h2>
+        <ol class="resume-timeline">
+          {
+            resume.education.map((item) => (
+              <li class="resume-entry">
+                <div class="resume-entry-head">
+                  <div>
+                    <h3 class="resume-entry-title">{item.degree}</h3>
+                    <p class="resume-entry-org">
+                      {item.schoolUrl ? (
+                        <a href={item.schoolUrl} target="_blank" rel="noopener noreferrer">
+                          {item.school}
+                        </a>
+                      ) : (
+                        item.school
+                      )}
+                      {item.location && <span class="resume-entry-loc"> · {item.location}</span>}
+                    </p>
+                  </div>
+                  <p class="resume-entry-dates">
+                    {formatMonth(item.start)} — {formatMonth(item.end)}
+                  </p>
+                </div>
+                {item.details && item.details.length > 0 && (
+                  <ul class="resume-highlights">
+                    {item.details.map((detail) => (
+                      <li>{detail}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="resume-section">
+        <h2 class="resume-section-title">Skills</h2>
+        <div class="resume-skills">
+          {
+            resume.skills.map((group) => (
+              <div class="resume-skill-group">
+                <h3 class="resume-skill-label">{group.label}</h3>
+                <ul class="resume-skill-items">
+                  {group.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      {
+        (resume.certifications.length > 0 || resume.languages.length > 0) && (
+          <div class="resume-columns">
+            {resume.certifications.length > 0 && (
+              <section class="resume-section">
+                <h2 class="resume-section-title">Certifications</h2>
+                <ul class="resume-plain-list">
+                  {resume.certifications.map((cert) => (
+                    <li>
+                      <span class="resume-plain-name">{cert.name}</span>
+                      <span class="resume-plain-meta">
+                        {[cert.issuer, cert.year].filter(Boolean).join(' · ')}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {resume.languages.length > 0 && (
+              <section class="resume-section">
+                <h2 class="resume-section-title">Languages</h2>
+                <ul class="resume-plain-list">
+                  {resume.languages.map((language) => (
+                    <li>
+                      <span class="resume-plain-name">{language.name}</span>
+                      <span class="resume-plain-meta">{language.level}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </main>
+
+  <Footer />
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script>
+    const printButton = document.querySelector('[data-resume-print]');
+    printButton?.addEventListener('click', () => window.print());
+  </script>
+</BaseLayout>
+
+<style>
+  .resume-shell {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .resume-header {
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+
+  .resume-kicker {
+    margin: 0 0 12px;
+    color: var(--paper-ink-faint);
+    font-family: var(--font-meta);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .resume-header h1 {
+    margin: 0;
+    color: var(--paper-ink);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    line-height: 1.04;
+  }
+
+  .resume-role {
+    margin: 10px 0 0;
+    color: var(--paper-accent);
+    font-family: var(--font-ui-label);
+    font-size: 1.08rem;
+  }
+
+  .resume-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin: 14px 0 0;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-ui-label);
+    font-size: 0.92rem;
+  }
+
+  .resume-availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .resume-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--paper-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--paper-accent) 22%, transparent);
+  }
+
+  .resume-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .resume-action {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid var(--paper-line-strong);
+    border-radius: 999px;
+    background: var(--paper-control);
+    color: var(--paper-ink);
+    font-family: var(--font-ui-label);
+    font-size: 0.86rem;
+    text-decoration: none;
+    transition:
+      border-color 180ms ease,
+      background 180ms ease;
+  }
+
+  .resume-action:hover {
+    border-color: var(--paper-accent);
+    background: var(--paper-control-hover);
+  }
+
+  .resume-action-primary {
+    border-color: var(--paper-accent);
+    background: var(--paper-accent);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .resume-action-primary:hover {
+    background: color-mix(in srgb, var(--paper-accent) 86%, #000);
+    color: #fff;
+  }
+
+  .resume-section {
+    margin-top: 44px;
+  }
+
+  .resume-section-title {
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--paper-line);
+    color: var(--paper-ink-faint);
+    font-family: var(--font-meta);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .resume-summary {
+    margin: 0;
+    max-width: 68ch;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-body);
+    font-size: 1.02rem;
+    line-height: 1.8;
+  }
+
+  .resume-timeline {
+    display: grid;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resume-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  .resume-entry-title {
+    margin: 0;
+    color: var(--paper-ink);
+    font-size: 1.12rem;
+    font-weight: 600;
+  }
+
+  .resume-entry-org {
+    margin: 4px 0 0;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-ui-label);
+    font-size: 0.94rem;
+  }
+
+  .resume-entry-org a {
+    color: var(--paper-accent);
+    text-decoration: none;
+  }
+
+  .resume-entry-org a:hover {
+    text-decoration: underline;
+  }
+
+  .resume-entry-loc {
+    color: var(--paper-ink-faint);
+  }
+
+  .resume-entry-dates {
+    margin: 0;
+    color: var(--paper-ink-faint);
+    font-family: var(--font-meta);
+    font-size: 0.82rem;
+    white-space: nowrap;
+  }
+
+  .resume-entry-summary {
+    margin: 12px 0 0;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-body);
+    line-height: 1.72;
+  }
+
+  .resume-highlights {
+    margin: 12px 0 0;
+    padding-left: 18px;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-body);
+    line-height: 1.72;
+  }
+
+  .resume-highlights li {
+    margin-top: 4px;
+  }
+
+  .resume-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resume-tech li {
+    padding: 3px 10px;
+    border: 1px solid var(--paper-line);
+    border-radius: 999px;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-meta);
+    font-size: 0.74rem;
+  }
+
+  .resume-skills {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 40px;
+  }
+
+  .resume-skill-label {
+    margin: 0 0 10px;
+    color: var(--paper-ink);
+    font-family: var(--font-ui-label);
+    font-size: 0.94rem;
+    font-weight: 600;
+  }
+
+  .resume-skill-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resume-skill-items li {
+    padding: 4px 10px;
+    border: 1px solid var(--paper-line);
+    border-radius: 6px;
+    background: var(--paper-surface);
+    color: var(--paper-ink-soft);
+    font-family: var(--font-meta);
+    font-size: 0.8rem;
+  }
+
+  .resume-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+  }
+
+  .resume-plain-list {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .resume-plain-list li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 12px;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-body);
+  }
+
+  .resume-plain-name {
+    color: var(--paper-ink);
+  }
+
+  .resume-plain-meta {
+    color: var(--paper-ink-faint);
+    font-family: var(--font-meta);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 720px) {
+    .resume-skills,
+    .resume-columns {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .resume-entry-head {
+      flex-direction: column;
+    }
+  }
+
+  @media print {
+    .resume-actions {
+      display: none;
+    }
+
+    .resume-entry {
+      break-inside: avoid;
+    }
+
+    .resume-section {
+      break-inside: avoid;
+    }
+  }
+</style>
+
+<style is:global>
+  @media print {
+    .blog-top-nav,
+    .scroll-top-button,
+    .scroll-top-marker,
+    footer {
+      display: none !important;
+    }
+
+    main {
+      padding-top: 0 !important;
+    }
+  }
+</style>

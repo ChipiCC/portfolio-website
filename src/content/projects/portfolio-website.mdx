@@ -1,0 +1,38 @@
+---
+title: 'Portfolio Website'
+description: 'A fast, content-first personal site built with Astro and a small design system.'
+date: '2026-10-01T00:00:00Z'
+draft: false
+showHeroImage: false
+tags:
+  - Astro
+  - TypeScript
+  - Design System
+comments: false
+sidebar:
+  enable: false
+  toc: true
+  relatedPosts: false
+---
+
+## Context
+
+I wanted a portfolio that stays fast and easy to update, without pulling in a heavy
+front-end framework for what is mostly static content. It also needed to read well for
+both a recruiter skimming on a phone and an engineer who clicks through to the details.
+
+## Approach
+
+- Astro's island model to ship near-zero JavaScript on content pages.
+- Content in Markdown/MDX with a typed schema, so frontmatter errors fail the build.
+- A small set of reusable cards and layout primitives instead of a component library.
+- Automated font subsetting and image optimization to keep the payload small.
+
+## Outcome
+
+A static site that builds to plain files, deploys anywhere, and takes minutes to update.
+The content model makes adding a new project a single MDX file.
+
+## Links
+
+- Source: [ChipiCC/portfolio-website](https://github.com/ChipiCC/portfolio-website)
