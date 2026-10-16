@@ -123,8 +123,9 @@ text = [
 ]
 
 [config.home.intro]
-title = "hello, I build software"
-name = "Guillermo Rodríguez"
+# Word from `title` rendered as the accent-italic emphasis in the hero heading.
+title = "I build software"
+name = "software"
 body = [
   "I'm a full-stack software engineer based in Málaga, Spain, focused on fintech and modern software architecture.",
   "I build with Python (FastAPI) and React, deploy on AWS with Terraform and GitHub Actions, and bring AI-assisted workflows into the way I work.",

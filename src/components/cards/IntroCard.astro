@@ -41,6 +41,7 @@ const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
   .intro-card {
     display: flex;
     flex-direction: column;
+    min-width: 0;
     min-height: 280px;
     padding: 0;
     border-color: transparent;
@@ -78,7 +79,7 @@ const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
     max-width: none;
     font-size: clamp(2.2rem, 4vw, 3.35rem);
     line-height: 1.04;
-    white-space: nowrap;
+    white-space: normal;
   }
 
   h2 span {
@@ -130,7 +131,6 @@ const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
 
     h2 {
       font-size: 1.7rem;
-      white-space: normal;
     }
 
     blockquote {
