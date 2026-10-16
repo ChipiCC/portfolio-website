@@ -2,7 +2,7 @@
 import { getSiteConfig } from '../data/site';
 import Icon from './Icon.astro';
 
-type MetadataKind = 'date' | 'words' | 'reading' | 'tags' | 'categories' | 'series' | 'default';
+type MetadataKind = 'date' | 'words' | 'reading' | 'default';
 
 interface Props {
   kind?: MetadataKind;
@@ -11,16 +11,13 @@ interface Props {
 }
 
 const { kind = 'default', separated = true, class: className } = Astro.props;
-const { pages } = await getSiteConfig();
-const metadataSeparator = pages.blog.metadataSeparator;
+const { format } = await getSiteConfig();
+const metadataSeparator = format.metadataSeparator;
 const useIconSeparator = metadataSeparator.trim().toLowerCase() === 'icon';
 const iconByKind: Record<MetadataKind, string | undefined> = {
   date: 'pencil-sparkles',
   words: 'pen-tool',
   reading: 'book-open-check',
-  tags: 'tags',
-  categories: 'folder',
-  series: 'layers',
   default: 'sparkle',
 };
 const iconName = iconByKind[kind];
@@ -86,18 +83,6 @@ const iconName = iconByKind[kind];
 
   .metadata-item-reading {
     --metadata-icon-color: #4d83d6;
-  }
-
-  .metadata-item-tags {
-    --metadata-icon-color: #c8649f;
-  }
-
-  .metadata-item-categories {
-    --metadata-icon-color: #8b76df;
-  }
-
-  .metadata-item-series {
-    --metadata-icon-color: #c69a2e;
   }
 
   .metadata-content {

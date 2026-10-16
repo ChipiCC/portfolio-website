@@ -71,8 +71,6 @@ function getResultPath(url: string) {
 function getResultKind(root: HTMLElement, url: string) {
   const path = getResultPath(url);
 
-  if (/^\/blog\/[^/]+\/?$/.test(path)) return root.dataset.searchKindBlogNote || 'Blog note';
-  if (path.startsWith('/blog')) return root.dataset.searchKindBlogIndex || 'Blog index';
   if (path.startsWith('/vibe')) return root.dataset.searchKindVibe || 'Vibe';
   if (path.startsWith('/projects')) return root.dataset.searchKindProject || 'Project';
 

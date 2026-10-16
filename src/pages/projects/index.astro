@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
-import BlogArticle from '../../layouts/BlogArticle.astro';
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
 import { getSiteConfig } from '../../data/site';
 import { sortByDateDesc } from '../../utils/content-dates';
 
@@ -40,7 +40,7 @@ function withBase(href: string) {
 }
 ---
 
-<BlogArticle
+<ArticleLayout
   post={projectIndexPage}
   headings={headings}
   sidebar={{ enable: false, ...projectIndex.data.sidebar }}
@@ -82,7 +82,7 @@ function withBase(href: string) {
       </section>
     )
   }
-</BlogArticle>
+</ArticleLayout>
 
 <style>
   .project-meta,

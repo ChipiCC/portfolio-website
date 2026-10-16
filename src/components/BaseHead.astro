@@ -49,46 +49,18 @@ function resolveAssetUrl(url: string) {
   return `${baseUrl}${assetUrl}`;
 }
 
-function getFontFormat(url: string) {
-  const extension = url.split('?')[0]?.split('#')[0]?.split('.').pop()?.toLowerCase();
-
-  if (extension === 'woff2') return 'woff2';
-  if (extension === 'woff') return 'woff';
-  if (extension === 'otf') return 'opentype';
-
-  return 'truetype';
-}
-
-function getSubsetFontUrl(fontUrl: string) {
-  const queryIndex = fontUrl.search(/[?#]/);
-  const suffix = queryIndex === -1 ? '' : fontUrl.slice(queryIndex);
-  const path = queryIndex === -1 ? fontUrl : fontUrl.slice(0, queryIndex);
-  const extensionIndex = path.lastIndexOf('.');
-  const basePath = extensionIndex === -1 ? path : path.slice(0, extensionIndex);
-
-  return `${basePath}-ui-subset.woff2${suffix}`;
-}
-
-function createFontCss(fonts: { en: string; code: string; zh: string; file: string }) {
-  const zhFontName = normalizeFontFamilyName(fonts.zh);
-  const zhFamily = toCssFontFamily(zhFontName);
-  const zhSubsetFamily = toCssFontFamily(`${zhFontName} UI Subset`);
+function createFontCss(fonts: { en: string; code: string }) {
   const enFamily = toCssFontFamily(fonts.en);
   const codeFontName = normalizeFontFamilyName(fonts.code);
   const codeFamily = toCssFontFamily(fonts.code);
-  const fontFile = toCssString(resolveAssetUrl(fonts.file));
-  const subsetUrl = getSubsetFontUrl(fonts.file);
-  const subsetFile = toCssString(resolveAssetUrl(subsetUrl));
   const monacoFontFace =
     codeFontName === 'Monaco'
       ? `@font-face{font-family:"Monaco";src:url(${toCssString(resolveAssetUrl('/fonts/Monaco.ttf'))}) format("truetype");font-style:normal;font-weight:400;font-display:swap;}`
       : '';
 
   return `
-@font-face{font-family:${zhSubsetFamily};src:url(${subsetFile}) format("${getFontFormat(subsetUrl)}");font-style:normal;font-weight:400;font-display:swap;}
-@font-face{font-family:${zhFamily};src:url(${fontFile}) format("${getFontFormat(fonts.file)}");font-style:normal;font-weight:400;font-display:swap;}
 ${monacoFontFace}
-html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-config-zh:${zhFamily};--font-config-zh-subset:${zhSubsetFamily};}
+html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};}
 `;
 }
 ---
@@ -100,7 +72,7 @@ html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-c
 <ClientRouter />
 <script is:inline>
   (() => {
-    const storageKey = 'navfolio-theme';
+    const storageKey = 'portfolio-theme';
     const root = document.documentElement;
     const themeMeta = () => document.querySelector('meta[name="theme-color"]');
     const systemTheme = () =>
@@ -130,7 +102,7 @@ html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-c
       }
       if (persist) setStoredTheme(nextTheme);
       window.dispatchEvent(
-        new CustomEvent('navfolio:theme-change', { detail: { theme: nextTheme } }),
+        new CustomEvent('portfolio:theme-change', { detail: { theme: nextTheme } }),
       );
     };
     const syncThemeControls = () => {
@@ -139,24 +111,24 @@ html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-c
 
     applyTheme(storedTheme() || systemTheme(), false);
 
-    if (!window.__navfolioTheme) {
-      window.__navfolioTheme = {
+    if (!window.__portfolioTheme) {
+      window.__portfolioTheme = {
         toggle() {
           applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
         },
       };
     }
 
-    if (window.__navfolioThemeInitialized) {
+    if (window.__portfolioThemeInitialized) {
       syncThemeControls();
       return;
     }
 
-    window.__navfolioThemeInitialized = true;
+    window.__portfolioThemeInitialized = true;
 
     document.addEventListener('click', (event) => {
       const toggle = event.target.closest?.('[data-theme-toggle]');
-      if (toggle) window.__navfolioTheme.toggle();
+      if (toggle) window.__portfolioTheme.toggle();
     });
 
     document.addEventListener('DOMContentLoaded', syncThemeControls, { once: true });
@@ -174,12 +146,6 @@ html:root{--font-config-en:${enFamily};--font-config-code:${codeFamily};--font-c
 <link rel="manifest" href={assetPath('manifest.json')} />
 <meta name="theme-color" content="#fdfdf9" />
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link
-  rel="alternate"
-  type="application/rss+xml"
-  title={site.title}
-  href={new URL('rss.xml', Astro.site)}
-/>
 <meta name="generator" content={Astro.generator} />
 
 <!-- Canonical URL -->

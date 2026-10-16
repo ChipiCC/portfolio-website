@@ -10,13 +10,11 @@ content pages, and everything editable from Markdown/MDX plus one config file.
 - Tailwind CSS 4 (via Vite)
 - MDX content collections with typed frontmatter
 - Pagefind full-text search
-- Font subsetting with FontTools (build-time)
 
 ## Requirements
 
 - [Bun](https://bun.sh) 1.4+
 - Node.js 24 (LTS)
-- Python 3.12 with `fonttools` and `brotli` — needed for production builds only
 
 The toolchain is pinned with [mise](https://mise.jdx.dev) in `.mise.toml`. If you use mise:
 
@@ -32,16 +30,6 @@ bun install
 bun run dev        # http://localhost:4321
 ```
 
-`bun run dev` does not require Python. For a production build, create the virtualenv the
-build script prefers:
-
-```sh
-python -m venv .venv
-.venv/bin/python -m pip install fonttools brotli
-PATH=.venv/bin:$PATH bun run build   # fonts + astro build + pagefind
-bun run preview
-```
-
 ## Personalize
 
 Most content lives in two places.
@@ -51,9 +39,10 @@ Most content lives in two places.
 - `[config.site]` — title, descriptions, canonical URL, repository, footer note
 - `[config.profile]` — name, handle, role, email, website, GitHub, avatar
 - `[config.theme]` — palette and UI language
+- `[config.format]` — date format and metadata separator
 - `[[config.topNav.links]]` — top navigation
 - `[config.home]` — hero quote, intro, navigation cards, contact links, current focus
-- `[config.pages.*]` — page copy for Projects, Vibe, and Notes
+- `[config.pages.*]` — page copy for Projects and Vibe
 
 ### `src/content/`
 
@@ -62,13 +51,11 @@ src/content/about.mdx            About page
 src/content/projects/index.mdx   Projects index intro
 src/content/projects/*.mdx       One file per project
 src/content/vibe/*.md            Short notes
-src/content/blog/*.md            Notes (blog collection, hidden from nav)
 ```
 
-Create content with the built-in scripts:
+Create a new note with the built-in script:
 
 ```sh
-bun run post:new my-note
 bun run vibe:new today
 ```
 
@@ -84,15 +71,15 @@ Edit `src/data/resume.ts` to update the résumé; the page updates automatically
 
 ## Scripts
 
-| Script                          | Description                                      |
-| ------------------------------- | ------------------------------------------------ |
-| `bun run dev`                   | Start the dev server                             |
-| `bun run build`                 | Font subsetting, Astro build, and Pagefind index |
-| `bun run preview`               | Preview the production build                     |
-| `bun run lint`                  | ESLint                                           |
-| `bun run format`                | Prettier                                         |
-| `bun run format:check`          | Lint + Prettier check                            |
-| `bun run post:new` / `vibe:new` | Scaffold new content                             |
+| Script                 | Description                  |
+| ---------------------- | ---------------------------- |
+| `bun run dev`          | Start the dev server         |
+| `bun run build`        | Astro build + Pagefind index |
+| `bun run preview`      | Preview the production build |
+| `bun run lint`         | ESLint                       |
+| `bun run format`       | Prettier                     |
+| `bun run format:check` | Lint + Prettier check        |
+| `bun run vibe:new`     | Scaffold a new note          |
 
 ## Deployment
 
@@ -105,12 +92,12 @@ The site is static and deploys anywhere. The included
 ```text
 public/                     Static assets (avatar, favicons, fonts)
 src/
-  components/               UI: cards, blog, article, widgets, comments
+  components/               UI: cards, article, comments, widgets
   config/site.toml          Site configuration
   content/                  Markdown/MDX content
   data/resume.ts            Résumé data
   layouts/                  Base and article layouts
-  pages/                    Routes (/, /projects, /resume, /vibe, /about, /blog)
-  styles/                   Global theme, palettes, typography
+  pages/                    Routes (/, /projects, /resume, /vibe, /about)
+  styles/                   Global theme, palette, typography
   utils/                    Build and runtime helpers
 ```

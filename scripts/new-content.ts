@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-type ContentType = 'blog' | 'vibe';
+type ContentType = 'vibe';
 type Extension = 'md' | 'mdx';
 
 type ContentTypeConfig = {
@@ -9,19 +9,11 @@ type ContentTypeConfig = {
   directory: string;
   defaultExtension: Extension;
   fileName: (slug: string, now: Date) => string;
-  bodyTemplate: (title: string) => string;
+  bodyTemplate: () => string;
   frontmatterTemplate: (title: string, isoDate: string) => string;
 };
 
 const CONTENT_TYPES = {
-  blog: {
-    collectionName: 'blog',
-    directory: 'src/content/blog',
-    defaultExtension: 'md',
-    fileName: (slug) => slug,
-    bodyTemplate: createBlogBody,
-    frontmatterTemplate: createBlogFrontmatter,
-  },
   vibe: {
     collectionName: 'vibe',
     directory: 'src/content/vibe',
@@ -70,7 +62,7 @@ if (existsSync(targetPath)) {
 mkdirSync(path.dirname(targetPath), { recursive: true });
 writeFileSync(
   targetPath,
-  `${config.frontmatterTemplate(title, isoDate)}\n\n${config.bodyTemplate(title)}\n`,
+  `${config.frontmatterTemplate(title, isoDate)}\n\n${config.bodyTemplate()}\n`,
   'utf8',
 );
 
@@ -78,7 +70,7 @@ console.log(`Created new ${config.collectionName} file:`);
 console.log(relativePath);
 
 function isSupportedContentType(value: string | undefined): value is ContentType {
-  return value === 'blog' || value === 'vibe';
+  return value === 'vibe';
 }
 
 function normalizeFilename(value: string): string {
@@ -110,25 +102,6 @@ function formatDatePrefix(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
-function createBlogFrontmatter(title: string, isoDate: string): string {
-  return `---
-title: "${escapeYamlString(title)}"
-description: ""
-date: "${isoDate}"
-draft: true
-sticky: false
-showHeroImage: false
-tags: []
-categories: []
-series: []
-comments: true
-sidebar:
-  enable: true
-  toc: true
-  relatedPosts: true
----`;
-}
-
 function createVibeFrontmatter(title: string, isoDate: string): string {
   return `---
 title: "${escapeYamlString(title)}"
@@ -145,12 +118,6 @@ size: md
 ---`;
 }
 
-function createBlogBody(title: string): string {
-  return `# ${title}
-
-Start writing here.`;
-}
-
 function createVibeBody(): string {
   return 'A small note from today.';
 }
@@ -163,7 +130,6 @@ function printMissingFilename(): void {
   console.error(`Please provide a filename.
 
 Examples:
-bun run post:new my-first-post
 bun run vibe:new today-cloud`);
 }
 
@@ -171,6 +137,5 @@ function printUnsupportedContentType(contentType: string | undefined): void {
   console.error(`Unsupported content type: ${contentType ?? ''}
 
 Supported types:
-- blog
 - vibe`);
 }
