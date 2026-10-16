@@ -1,0 +1,67 @@
+---
+title: 'FastAPI Service Template'
+description: 'A production-ready FastAPI microservice template: layered architecture, native SQL, and a full CI, security, and observability baseline.'
+date: '2026-10-13T00:00:00Z'
+draft: false
+showHeroImage: false
+tags:
+  - Python
+  - FastAPI
+  - PostgreSQL
+  - Docker
+  - GitHub Actions
+comments: false
+sidebar:
+  enable: false
+  toc: true
+---
+
+## Problem
+
+Starting a new FastAPI service means re-deciding the same things every time: how the code
+is layered, how the database is accessed, how configuration and secrets are validated, and
+what "production-ready" actually covers. Most templates either stop at a hello-world
+endpoint or hand you an ORM-first structure that hides the SQL and skips the operational
+concerns.
+
+## What I built
+
+An opinionated template that a new service can be started from in minutes, covering the
+parts that are tedious to redo:
+
+- **Layered architecture** — `domain → service → repository → db`. Routers and handlers
+  stay thin, services hold the business logic, and repositories own hand-written SQL.
+- **No ORM** — native SQL over async SQLAlchemy Core and asyncpg, PostgreSQL `uuid` keys,
+  Alembic raw-SQL migrations, and a request-scoped unit of work.
+- **Configuration** — `pydantic-settings`, 12-factor, `.env` support, and production guards
+  that refuse to boot on insecure defaults.
+- **Security** — opt-in API-key auth, CORS, security headers, trusted hosts, and in-process
+  rate limiting.
+- **Observability** — structured JSON logging, request IDs, access logs, and Prometheus
+  metrics behind `/metrics`.
+- **Ops** — a multi-stage non-root Dockerfile, Docker Compose, GitHub Actions CI, and
+  Dependabot.
+- **Documentation** — `docs/` split by topic (architecture, database, security, testing,
+  operations) instead of one giant README.
+
+## Key decisions
+
+- **No ORM** — hand-written SQL keeps queries explicit and predictable, and avoids the N+1
+  surprises and lazy-loading magic that come with a mapper. The tradeoff is more code for
+  straightforward CRUD.
+- **Request-scoped unit of work** — the session dependency owns the transaction, so
+  services stay free of commit/rollback bookkeeping.
+- **Tests against real PostgreSQL** — no SQLite. The schema is built by applying the
+  Alembic migrations, so the suite also validates them, and coverage is gated at 90%.
+- **Reproducible tooling** — `uv` for dependencies and `mise` for pinned tool versions and
+  tasks, so a fresh clone behaves the same on any machine.
+
+## Result
+
+A baseline I can start a service from in minutes instead of days, with the architecture,
+security posture, and CI already in place. The layering rule is documented well enough that
+new contributors — and AI agents — can follow it without re-deriving the conventions.
+
+## Links
+
+- Source: [ChipiCC/fastapi-service-template](https://github.com/ChipiCC/fastapi-service-template)

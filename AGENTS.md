@@ -87,8 +87,12 @@ src/
 So: create a branch, commit, push, open a PR, and let the `build` check pass before
 merging. The deploy job only runs on push to `master` (i.e. after a merge).
 
-## Placeholders to replace
+## Content sources
 
-The site still ships template placeholders: `Your Name`, `hello@example.com`,
-`Example Corp` in `src/data/resume.ts`, `yourhandle` LinkedIn URLs, `public/images/avatar.svg`,
-and the favicons in `public/`.
+Personal data lives in files, never in components:
+
+- `src/config/site.toml` — identity, nav, home copy, contact links, page titles
+- `src/data/resume.ts` — résumé (experience, education, skills, languages)
+- `src/content/about.mdx` — bio
+- `src/content/projects/*.mdx` — one file per project (`index.mdx` is the index intro)
+- `src/content/vibe/*.md` — short notes

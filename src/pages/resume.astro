@@ -18,12 +18,18 @@ function formatMonth(value?: string) {
   });
 }
 
+// The site URL is filtered out: linking a visitor back to the page they are already on is noise.
 const contactLinks = [
   { label: 'Email', href: `mailto:${profile.email}` },
   { label: 'GitHub', href: profile.github },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yourhandle' },
+  { label: 'LinkedIn', href: profile.linkedin },
   { label: 'Website', href: profile.website },
-].filter((link) => link.href);
+].filter((link) => link.href && link.href !== site.url);
+
+const hasCertifications = resume.certifications.length > 0;
+const hasLanguages = resume.languages.length > 0;
+const hasResumeExtras = hasCertifications || hasLanguages;
+const showResumeColumns = hasCertifications && hasLanguages;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -32,7 +38,7 @@ const jsonLd = {
   jobTitle: profile.role,
   email: `mailto:${profile.email}`,
   url: site.url,
-  sameAs: [profile.github, profile.website].filter(Boolean),
+  sameAs: [profile.github, profile.linkedin, profile.website].filter(Boolean),
   address: { '@type': 'PostalAddress', addressLocality: resume.location },
 };
 ---
@@ -183,9 +189,9 @@ const jsonLd = {
       </section>
 
       {
-        (resume.certifications.length > 0 || resume.languages.length > 0) && (
-          <div class="resume-columns">
-            {resume.certifications.length > 0 && (
+        hasResumeExtras && (
+          <div class:list={['resume-columns', { 'resume-columns-single': !showResumeColumns }]}>
+            {hasCertifications && (
               <section class="resume-section">
                 <h2 class="resume-section-title">Certifications</h2>
                 <ul class="resume-plain-list">
@@ -201,7 +207,7 @@ const jsonLd = {
               </section>
             )}
 
-            {resume.languages.length > 0 && (
+            {hasLanguages && (
               <section class="resume-section">
                 <h2 class="resume-section-title">Languages</h2>
                 <ul class="resume-plain-list">
@@ -478,6 +484,11 @@ const jsonLd = {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 40px;
+  }
+
+  /* Keep a lone section (e.g. Languages with no certifications) from sitting in a half-empty row. */
+  .resume-columns-single {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .resume-plain-list {
